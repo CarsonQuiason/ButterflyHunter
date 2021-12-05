@@ -20,4 +20,9 @@ public class playerScript : MonoBehaviour
         _target.z = 0;
         transform.position = Vector3.MoveTowards(transform.position, _target, 1);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other);
+    }
 }
