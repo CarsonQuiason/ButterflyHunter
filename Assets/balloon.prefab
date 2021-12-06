@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2873552247619558427}
   m_Layer: 0
   m_Name: balloon
-  m_TagString: enemy
+  m_TagString: balloon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

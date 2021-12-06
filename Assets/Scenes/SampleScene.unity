@@ -336,6 +336,7 @@ MonoBehaviour:
   entities:
   - {fileID: 2007928600581061207, guid: 48deeaba2dd48164a9c9bd87dd66e9fd, type: 3}
   - {fileID: 7381253932275300524, guid: bc0832f6aef452a498ab9e6f87e4991b, type: 3}
+  whirlwind: {fileID: 3126101885250032673, guid: 23130f632f123fd46b893892c5823919, type: 3}
 --- !u!1001 &5157897731366578790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -347,10 +348,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: player
       objectReference: {fileID: 0}
+    - target: {fileID: 5157897732516126705, guid: c35888d2d7acb5344b2edfd8ffb21171, type: 3}
+      propertyPath: m_TagString
+      value: player
+      objectReference: {fileID: 0}
     - target: {fileID: 5157897732516126714, guid: c35888d2d7acb5344b2edfd8ffb21171, type: 3}
       propertyPath: Camera
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 5157897732516126714, guid: c35888d2d7acb5344b2edfd8ffb21171, type: 3}
+      propertyPath: playerPref
+      value: 
+      objectReference: {fileID: 724102760}
     - target: {fileID: 5157897732516126717, guid: c35888d2d7acb5344b2edfd8ffb21171, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -361,7 +370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5157897732516126717, guid: c35888d2d7acb5344b2edfd8ffb21171, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.97
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5157897732516126717, guid: c35888d2d7acb5344b2edfd8ffb21171, type: 3}
       propertyPath: m_LocalPosition.z

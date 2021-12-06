@@ -59,9 +59,19 @@ public class playerScript : MonoBehaviour
         {
             case "whirlwind":
                 whirlwind = true;
+                Destroy(other.gameObject);
                 break;
-            case "enemy":
-                Debug.Log("enemy");
+            case "bird":
+                Debug.Log("bird");
+                Destroy(other.gameObject);
+                break;
+            case "butterfly":
+                Debug.Log("butterfly");
+                Destroy(other.gameObject);
+                break;
+            case "balloon":
+                Debug.Log("balloon");
+                Destroy(other.gameObject);
                 break;
         }
     }
