@@ -34,6 +34,11 @@ public class gameLoop : MonoBehaviour
             xDir = Random.Range(0, 2) == 0 ? -10 : 10;
             Instantiate(entity, new Vector3(xDir, Random.Range(-5, 5), 0), new Quaternion(0, 0, 0, 0));
         }
+        else if(entity.tag == "butterfly")
+        {
+            xDir = Random.Range(0, 2) == 0 ? -10 : 10;
+            Instantiate(entity, new Vector3(xDir, Random.Range(-3, 3), 0), new Quaternion(0, 0, 0, 0));
+        }
     }
 
     public void spawnWhirlwind()

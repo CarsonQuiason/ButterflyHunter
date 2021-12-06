@@ -336,6 +336,7 @@ MonoBehaviour:
   entities:
   - {fileID: 2007928600581061207, guid: 48deeaba2dd48164a9c9bd87dd66e9fd, type: 3}
   - {fileID: 7381253932275300524, guid: bc0832f6aef452a498ab9e6f87e4991b, type: 3}
+  - {fileID: 5885276977911291322, guid: 3485e8669224e3a4f97b51ce7cf8fa07, type: 3}
   whirlwind: {fileID: 3126101885250032673, guid: 23130f632f123fd46b893892c5823919, type: 3}
 --- !u!1001 &5157897731366578790
 PrefabInstance:
