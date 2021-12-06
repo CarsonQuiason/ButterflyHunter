@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class playerScript : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class playerScript : MonoBehaviour
     public Camera Camera;
     public GameObject playerPref;
     public bool whirlwind = false;
+    TextMeshProUGUI TMPfeedBack;
+    Image imageFeedback;
 
     float t1 = 0f;
     float t2 = 0f;
@@ -19,6 +23,10 @@ public class playerScript : MonoBehaviour
     void Start()
     {
         startScale = playerPref.transform.localScale;
+        TMPfeedBack = this.gameObject.transform.Find("Canvas/TMPfeedBack").GetComponent<TextMeshProUGUI>();
+        imageFeedback = this.gameObject.transform.Find("Canvas/checkMark").GetComponent<Image>();
+        TMPfeedBack.enabled = false;
+        imageFeedback.enabled = false;
     }
 
     // Update is called once per frame
@@ -27,8 +35,12 @@ public class playerScript : MonoBehaviour
         _target = Camera.ScreenToWorldPoint(Input.mousePosition);
         _target.z = 0;
         transform.position = Vector3.MoveTowards(transform.position, _target, 1);
+        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        pos.x = Mathf.Clamp01(pos.x);
+        pos.y = Mathf.Clamp01(pos.y);
+        transform.position = Camera.main.ViewportToWorldPoint(pos);
 
-        if(whirlwind)
+        if (whirlwind)
         {
             Vector3 newZ = playerPref.transform.position;
             newZ.z = -10;
@@ -62,17 +74,38 @@ public class playerScript : MonoBehaviour
                 Destroy(other.gameObject);
                 break;
             case "bird":
+                StartCoroutine(giveNegFeedback());
                 Debug.Log("bird");
                 Destroy(other.gameObject);
                 break;
             case "butterfly":
+                StartCoroutine(givePosFeedback());
                 Debug.Log("butterfly");
                 Destroy(other.gameObject);
                 break;
             case "balloon":
+                StartCoroutine(giveNegFeedback());
                 Debug.Log("balloon");
                 Destroy(other.gameObject);
                 break;
         }
+    }
+
+    IEnumerator giveNegFeedback()
+    {
+        TMPfeedBack.text = "X";
+        TMPfeedBack.color = Color.red;
+        TMPfeedBack.enabled = true;
+        imageFeedback.enabled = false;
+        yield return new WaitForSeconds(3);
+        TMPfeedBack.enabled = false;
+    }
+    IEnumerator givePosFeedback()
+    {
+        TMPfeedBack.text = "";
+        imageFeedback.enabled = true;
+        TMPfeedBack.enabled = false;
+        yield return new WaitForSeconds(3);
+        imageFeedback.enabled = false;
     }
 }
