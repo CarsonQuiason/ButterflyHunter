@@ -19,6 +19,8 @@ public class playerScript : MonoBehaviour
     Vector3 startScale;
     Vector3 targetScale = Vector3.one * 2;
 
+    private bool canMove = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,13 +34,16 @@ public class playerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _target = Camera.ScreenToWorldPoint(Input.mousePosition);
-        _target.z = 0;
-        transform.position = Vector3.MoveTowards(transform.position, _target, 1);
-        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-        pos.x = Mathf.Clamp01(pos.x);
-        pos.y = Mathf.Clamp01(pos.y);
-        transform.position = Camera.main.ViewportToWorldPoint(pos);
+        if(canMove)
+        {
+            _target = Camera.ScreenToWorldPoint(Input.mousePosition);
+            _target.z = 0;
+            transform.position = Vector3.MoveTowards(transform.position, _target, 1);
+            Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+            pos.x = Mathf.Clamp01(pos.x);
+            pos.y = Mathf.Clamp01(pos.y);
+            transform.position = Camera.main.ViewportToWorldPoint(pos);
+        }
 
         if (whirlwind)
         {
@@ -76,16 +81,19 @@ public class playerScript : MonoBehaviour
             case "bird":
                 StartCoroutine(giveNegFeedback());
                 Debug.Log("bird");
+                gameLoop.misses--;
                 Destroy(other.gameObject);
                 break;
             case "butterfly":
                 StartCoroutine(givePosFeedback());
                 Debug.Log("butterfly");
+                gameLoop.hits++;
                 Destroy(other.gameObject);
                 break;
             case "balloon":
                 StartCoroutine(giveNegFeedback());
                 Debug.Log("balloon");
+                gameLoop.misses--;
                 Destroy(other.gameObject);
                 break;
         }
@@ -97,8 +105,10 @@ public class playerScript : MonoBehaviour
         TMPfeedBack.color = Color.red;
         TMPfeedBack.enabled = true;
         imageFeedback.enabled = false;
+        canMove = false;
         yield return new WaitForSeconds(3);
         TMPfeedBack.enabled = false;
+        canMove = true;
     }
     IEnumerator givePosFeedback()
     {
@@ -108,4 +118,5 @@ public class playerScript : MonoBehaviour
         yield return new WaitForSeconds(3);
         imageFeedback.enabled = false;
     }
+
 }

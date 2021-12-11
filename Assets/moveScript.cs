@@ -38,19 +38,19 @@ public class moveScript : MonoBehaviour
         {
             case "balloon":
                 mt = MovementType.balloon;
-                moveSpeed = Random.Range(.001f, .005f);
+                moveSpeed = Random.Range(.003f, .008f);
                 break;
             case "bird":
                 mt = MovementType.bird;
                 sinSpeed = Random.Range(1f, 2f);
                 moveSpeed = Random.Range(.001f, .005f);
-                amp = 1f;
+                amp = Random.Range(1f, 3f);
                 break;
             case "butterfly":
                 mt = MovementType.butterfly;
-                sinSpeed = Random.Range(8f, 9f);
+                sinSpeed = Random.Range(4f, 5f);
                 moveSpeed = Random.Range(.005f, .01f);
-                amp = 3f;
+                amp = Random.Range(3f, 5f);
                 break;
         }
 
