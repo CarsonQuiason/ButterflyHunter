@@ -19,10 +19,12 @@ public class moveScript : MonoBehaviour
     private float direction = 0f;
     private float amp = 0f;
     private MovementType mt;
+    private SpriteRenderer mySpriteRenderer;
 
     void Start()
     {
         _startPosition = transform.position;
+
         if(_startPosition.x <= -10)
         {
             direction = 1;
@@ -30,6 +32,7 @@ public class moveScript : MonoBehaviour
         else
         {
             direction = -1;
+            mySpriteRenderer.flipX = true;
         }
 
         posInc = Random.Range(.001f, .005f);
@@ -54,6 +57,11 @@ public class moveScript : MonoBehaviour
                 break;
         }
 
+    }
+
+    void Awake()
+    {
+        mySpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
