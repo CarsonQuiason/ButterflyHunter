@@ -10,8 +10,8 @@ public class playerScript : MonoBehaviour
     public Camera Camera;
     public GameObject playerPref;
     public bool whirlwind = false;
-    TextMeshProUGUI TMPfeedBack;
     Image imageFeedback;
+    SpriteRenderer hitStun;
 
     float t1 = 0f;
     float t2 = 0f;
@@ -25,10 +25,10 @@ public class playerScript : MonoBehaviour
     void Start()
     {
         startScale = playerPref.transform.localScale;
-        TMPfeedBack = this.gameObject.transform.Find("Canvas/TMPfeedBack").GetComponent<TextMeshProUGUI>();
         imageFeedback = this.gameObject.transform.Find("Canvas/checkMark").GetComponent<Image>();
-        TMPfeedBack.enabled = false;
+        hitStun = this.gameObject.transform.Find("Canvas/stunSheet").GetComponent<SpriteRenderer>();
         imageFeedback.enabled = false;
+        hitStun.enabled = false;
     }
 
     // Update is called once per frame
@@ -101,23 +101,19 @@ public class playerScript : MonoBehaviour
 
     IEnumerator giveNegFeedback()
     {
-        TMPfeedBack.text = "X";
-        TMPfeedBack.color = Color.red;
-        TMPfeedBack.enabled = true;
         imageFeedback.enabled = false;
         if(canMove)
         {
             canMove = false;
+            hitStun.enabled = true;
         }
         yield return new WaitForSeconds(3);
-        TMPfeedBack.enabled = false;
         canMove = true;
+        hitStun.enabled = false;
     }
     IEnumerator givePosFeedback()
     {
-        TMPfeedBack.text = "";
         imageFeedback.enabled = true;
-        TMPfeedBack.enabled = false;
         yield return new WaitForSeconds(3);
         imageFeedback.enabled = false;
     }
