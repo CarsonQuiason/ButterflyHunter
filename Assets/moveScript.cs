@@ -66,29 +66,33 @@ public class moveScript : MonoBehaviour
 
     void Update()
     {
-        if(mt == MovementType.balloon)
+        if (!gameLoop.paused)
         {
-            posInc += moveSpeed;
-            _newPosition = _startPosition + new Vector3(0, posInc, 0);
-            transform.position = _newPosition;
-        }
-        else if(mt == MovementType.bird)
-        {
-            posInc += moveSpeed;
-            _newPosition = _startPosition + new Vector3(posInc * direction, Mathf.Sin(Time.time * sinSpeed) * amp, 0.0f);
-            transform.position = _newPosition;
-        }
-        else if(mt == MovementType.butterfly)
-        {
-            posInc += moveSpeed;
-            _newPosition = _startPosition + new Vector3(posInc * direction, Mathf.Sin(Time.time * sinSpeed) * amp, 0.0f);
-            transform.position = _newPosition;
-        }
+            if (mt == MovementType.balloon)
+            {
+                posInc += moveSpeed;
+                _newPosition = _startPosition + new Vector3(0, posInc, 0);
+                transform.position = _newPosition;
+            }
+            else if (mt == MovementType.bird)
+            {
+                posInc += moveSpeed;
+                _newPosition = _startPosition + new Vector3(posInc * direction, Mathf.Sin(Time.time * sinSpeed) * amp, 0.0f);
+                transform.position = _newPosition;
+            }
+            else if (mt == MovementType.butterfly)
+            {
+                posInc += moveSpeed;
+                _newPosition = _startPosition + new Vector3(posInc * direction, Mathf.Sin(Time.time * sinSpeed) * amp, 0.0f);
+                transform.position = _newPosition;
+            }
 
-        if(transform.position.magnitude > 15)
-        {
-            Destroy(this.gameObject);
+            if (transform.position.magnitude > 15)
+            {
+                Destroy(this.gameObject);
+            }
         }
+        
     }
 
 }

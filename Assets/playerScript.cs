@@ -34,40 +34,44 @@ public class playerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(canMove)
+        if (!gameLoop.paused)
         {
-            _target = Camera.ScreenToWorldPoint(Input.mousePosition);
-            _target.z = 0;
-            transform.position = Vector3.MoveTowards(transform.position, _target, 1);
-            Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-            pos.x = Mathf.Clamp01(pos.x);
-            pos.y = Mathf.Clamp01(pos.y);
-            transform.position = Camera.main.ViewportToWorldPoint(pos);
-        }
-
-        if (whirlwind)
-        {
-            Vector3 newZ = playerPref.transform.position;
-            newZ.z = -10;
-            playerPref.transform.position = newZ;
-            t1 += Time.deltaTime / duration;
-            Vector3 newScale = Vector3.Lerp(startScale, targetScale, t1);
-            playerPref.transform.localScale = newScale;
-            if(playerPref.transform.localScale == targetScale)
+            if (canMove)
             {
-                t2 += Time.deltaTime / duration;
-                newScale = Vector3.Lerp(targetScale, startScale, t2);
+                _target = Camera.ScreenToWorldPoint(Input.mousePosition);
+                _target.z = 0;
+                transform.position = Vector3.MoveTowards(transform.position, _target, 1);
+                Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+                pos.x = Mathf.Clamp01(pos.x);
+                pos.y = Mathf.Clamp01(pos.y);
+                transform.position = Camera.main.ViewportToWorldPoint(pos);
+            }
+
+            if (whirlwind)
+            {
+                Vector3 newZ = playerPref.transform.position;
+                newZ.z = -10;
+                playerPref.transform.position = newZ;
+                t1 += Time.deltaTime / duration;
+                Vector3 newScale = Vector3.Lerp(startScale, targetScale, t1);
                 playerPref.transform.localScale = newScale;
-                if(playerPref.transform.localScale == startScale)
+                if (playerPref.transform.localScale == targetScale)
                 {
-                    t1 = t2 = 0f;
-                    newZ = playerPref.transform.position;
-                    newZ.z = 0;
-                    playerPref.transform.position = newZ;
-                    whirlwind = false;
+                    t2 += Time.deltaTime / duration;
+                    newScale = Vector3.Lerp(targetScale, startScale, t2);
+                    playerPref.transform.localScale = newScale;
+                    if (playerPref.transform.localScale == startScale)
+                    {
+                        t1 = t2 = 0f;
+                        newZ = playerPref.transform.position;
+                        newZ.z = 0;
+                        playerPref.transform.position = newZ;
+                        whirlwind = false;
+                    }
                 }
             }
         }
+       
     }
 
     private void OnTriggerEnter(Collider other)

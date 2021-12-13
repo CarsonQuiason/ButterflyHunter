@@ -26,43 +26,50 @@ public class gameLoop : MonoBehaviour
     private float timeSinceLastBird = 0;
     private float balloonSpawnRate = 3;
     private float timeSinceLastBalloon = 0;
+    public Canvas pauseMenu;
+    public static bool paused = false;
 
     void Start()
     {
         InvokeRepeating("spawnButterfly", 1f, 5f);
         InvokeRepeating("spawnWhirlwind", 1f, 10f);
         newLevelText.enabled = false;
+        pauseMenu.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        if(time - timeSinceLastBird >= birdSpawnRate)
+        if (!paused)
         {
-            Invoke("spawnBird", 0f);
-            timeSinceLastBird = time;
-        }
-        if(time - timeSinceLastBalloon >= balloonSpawnRate)
-        {
-            Invoke("spawnBalloon", 0f);
-            timeSinceLastBalloon = time;
-        }
+            time += Time.deltaTime;
+            if (time - timeSinceLastBird >= birdSpawnRate)
+            {
+                Invoke("spawnBird", 0f);
+                timeSinceLastBird = time;
+            }
+            if (time - timeSinceLastBalloon >= balloonSpawnRate)
+            {
+                Invoke("spawnBalloon", 0f);
+                timeSinceLastBalloon = time;
+            }
 
-        timeLeft -= Time.deltaTime;
-        levelText.text = "Level: " + level;
-        hitsText.text = "Butterflies: " + hits;
-        missesText.text = "Misses: " + misses;
-        timeText.text = "Time Left: " + (int)timeLeft;
+            timeLeft -= Time.deltaTime;
+            levelText.text = "Level: " + level;
+            hitsText.text = "Butterflies: " + hits;
+            missesText.text = "Misses: " + misses;
+            timeText.text = "Time Left: " + (int)timeLeft;
 
-        if(timeLeft <= 0 || misses == 0)
-        {
-            levelChange(false);
+            if (timeLeft <= 0 || misses == 0)
+            {
+                levelChange(false);
+            }
+            else if (hits == hitsNeeded * level)
+            {
+                levelChange(true);
+            }
         }
-        else if(hits == hitsNeeded * level)
-        {
-            levelChange(true);
-        }
+        
 
 
     }
@@ -84,7 +91,7 @@ public class gameLoop : MonoBehaviour
             balloonSpawnRate += .25f;
             if (level < 1)
             {
-                SceneManager.LoadScene("GameOver");
+                gameOver();
             }
             else
             {
@@ -127,6 +134,26 @@ public class gameLoop : MonoBehaviour
     public void spawnWhirlwind()
     {
         Instantiate(whirlwind, new Vector3(Random.Range(-5, 5), Random.Range(-3, 6), 0), new Quaternion(0, 0, 0, 0));
+    }
+
+    public void pause()
+    {
+        paused = true;
+        Time.timeScale = 0;
+        pauseMenu.enabled = true;
+    }
+
+    public void resume()
+    {
+        paused = false;
+        Time.timeScale = 1;
+        pauseMenu.enabled = false;
+
+    }
+
+    public void gameOver()
+    {
+        SceneManager.LoadScene("GameOver");
     }
 
 }
