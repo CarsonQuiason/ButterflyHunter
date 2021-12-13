@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
+using UnityEngine.Analytics;
 
 public class gameLoop : MonoBehaviour
 {
@@ -11,23 +13,28 @@ public class gameLoop : MonoBehaviour
     public GameObject bird;
     public GameObject balloon;
     public GameObject whirlwind;
-    private float timeLeft = 25;
-    private float time = 0;
-    static public int hits = 0;
-    static public int misses = 3;
-    private int level = 1;
-    private int hitsNeeded = 3;
+    public GameObject airplane;
+    private float timeLeft;
+    private float time;
+    public static int hits;
+    public static int misses;
+    public static int level;
+    private int hitsNeeded;
     public Text levelText;
     public Text hitsText;
     public Text missesText;
     public Text newLevelText;
     public Text timeText;
-    private float  birdSpawnRate = 4;
-    private float timeSinceLastBird = 0;
-    private float balloonSpawnRate = 3;
-    private float timeSinceLastBalloon = 0;
+    public Text nextLevel;
+    private float  birdSpawnRate;
+    private float timeSinceLastBird;
+    private float balloonSpawnRate;
+    private float timeSinceLastBalloon;
+    private float airplaneSpawnRate;
+    private float timeSinceLastAirplane;
     public Canvas pauseMenu;
     public static bool paused = false;
+    public static int userID;
 
     void Start()
     {
@@ -35,6 +42,19 @@ public class gameLoop : MonoBehaviour
         InvokeRepeating("spawnWhirlwind", 1f, 10f);
         newLevelText.enabled = false;
         pauseMenu.enabled = false;
+        userID = PlayerPrefs.GetInt("userID") + 1;
+        timeLeft = 45;
+        time = 0;
+        hits = 0;
+        misses = 3;
+        level = 1;
+        hitsNeeded = 3;
+        birdSpawnRate = 4;
+        timeSinceLastBird = 0;
+        timeSinceLastBalloon = 0;
+        balloonSpawnRate = 3;
+        airplaneSpawnRate = 5;
+        timeSinceLastAirplane = 0;
     }
 
     // Update is called once per frame
@@ -54,35 +74,47 @@ public class gameLoop : MonoBehaviour
                 timeSinceLastBalloon = time;
             }
 
+            if (time - timeSinceLastAirplane >= airplaneSpawnRate)
+            {
+                Invoke("spawnAirplane", 0f);
+                timeSinceLastAirplane = time;
+            }
+
             timeLeft -= Time.deltaTime;
             levelText.text = "Level: " + level;
             hitsText.text = "Butterflies: " + hits;
             missesText.text = "Misses: " + misses;
             timeText.text = "Time Left: " + (int)timeLeft;
+            nextLevel.text = "Next Level in: " + (hitsNeeded - hits) + " Butterflies";
 
             if (timeLeft <= 0 || misses == 0)
             {
                 levelChange(false);
             }
-            else if (hits == hitsNeeded * level)
+            else if (hits == hitsNeeded)
             {
                 levelChange(true);
             }
         }
-        
-
-
     }
 
     public void levelChange(bool change)
     {
         if(change)
         {
-            level++;
-            birdSpawnRate -= .25f;
-            balloonSpawnRate -= .25f;
-            newLevelText.text = "Level Up!";
-            StartCoroutine(showNewLevel());
+            if(level > 4)
+            {
+                gameOver();
+            }
+            else
+            {
+                level++;
+                birdSpawnRate -= .25f;
+                balloonSpawnRate -= .25f;
+                newLevelText.text = "Level Up!";
+                timeLeft += 10;
+                StartCoroutine(showNewLevel());
+            }
         }
         else
         {
@@ -99,9 +131,8 @@ public class gameLoop : MonoBehaviour
             }
             StartCoroutine(showNewLevel());
         }
-        timeLeft = level * 25;
-        hits = 0;
         misses = 3;
+        hitsNeeded = hits + (level * level);
     }
     IEnumerator showNewLevel()
     {
@@ -136,6 +167,13 @@ public class gameLoop : MonoBehaviour
         Instantiate(whirlwind, new Vector3(Random.Range(-5, 5), Random.Range(-3, 6), 0), new Quaternion(0, 0, 0, 0));
     }
 
+    public void spawnAirplane()
+    {
+        float xDir = 0;
+        xDir = Random.Range(0, 2) == 0 ? -10 : 10;
+        Instantiate(airplane, new Vector3(xDir, Random.Range(-5, 5), 0), new Quaternion(0, 0, 0, 0));
+    }
+
     public void pause()
     {
         paused = true;
@@ -153,6 +191,20 @@ public class gameLoop : MonoBehaviour
 
     public void gameOver()
     {
+        if(hits > PlayerPrefs.GetInt("highScore"))
+        {
+            PlayerPrefs.SetInt("highScore", hits);
+        }
+
+        string path = Application.dataPath + "/gameLogs/Log.txt";
+
+        if (!File.Exists(path))
+        {
+            File.WriteAllText(path, "Game Log \n\n");
+        }
+        PlayerPrefs.SetInt("userID", userID);
+        string userData = "======USER DATA======\n" + "UserID: " + userID.ToString("0000") + "\nScore: " + hits + "\nDateplayed: " + System.DateTime.Now + "\nDuration: " + AnalyticsSessionInfo.sessionElapsedTime + "\n";
+        File.AppendAllText(path, userData);
         SceneManager.LoadScene("GameOver");
     }
 

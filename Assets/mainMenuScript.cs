@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class mainMenuScript : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class mainMenuScript : MonoBehaviour
     public Canvas menu;
     public Canvas feedBack;
     public Canvas instructions;
+    public InputField userInputFeedback;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,5 +57,17 @@ public class mainMenuScript : MonoBehaviour
     public void playGame()
     {
         SceneManager.LoadScene("SampleScene 1");
+    }
+
+    public void submitFeedback()
+    {
+        string path = Application.dataPath + "/gameLogs/feedBack.txt";
+        if (!File.Exists(path))
+        {
+            File.WriteAllText(path, "Feedback\n\n");
+        }
+        string userFeedback = "\n======FEEDBACK======\n" + userInputFeedback.text + "\n";
+        File.AppendAllText(path, userFeedback);
+        goBack();
     }
 }

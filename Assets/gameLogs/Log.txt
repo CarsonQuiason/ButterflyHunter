@@ -1,0 +1,67 @@
+Game Log 
+
+======USER DATA======
+UserID: 0001
+Score: 1
+Dateplayed: 12/12/2021 9:20:12 PM
+Duration: 11340
+======USER DATA======
+UserID: 0002
+Score: 1
+Dateplayed: 12/12/2021 9:20:51 PM
+Duration: 9157
+======USER DATA======
+UserID: 0003
+Score: 2
+Dateplayed: 12/12/2021 9:25:16 PM
+Duration: 14279
+======USER DATA======
+UserID: 0004
+Score: 7
+Dateplayed: 12/12/2021 9:48:39 PM
+Duration: 45987
+======USER DATA======
+UserID: 0005
+Score: 0
+Dateplayed: 12/12/2021 9:53:54 PM
+Duration: 3633
+======USER DATA======
+UserID: 0006
+Score: 8
+Dateplayed: 12/12/2021 9:58:44 PM
+Duration: 45035
+======USER DATA======
+UserID: 0007
+Score: 8
+Dateplayed: 12/12/2021 10:00:29 PM
+Duration: 45033
+======USER DATA======
+UserID: 0008
+Score: 30
+Dateplayed: 12/12/2021 10:04:12 PM
+Duration: 72623
+======USER DATA======
+UserID: 0009
+Score: 32
+Dateplayed: 12/12/2021 10:06:59 PM
+Duration: 59468
+======USER DATA======
+UserID: 0010
+Score: 54
+Dateplayed: 12/12/2021 10:08:50 PM
+Duration: 83470
+======USER DATA======
+UserID: 0011
+Score: 1
+Dateplayed: 12/12/2021 10:09:43 PM
+Duration: 4234
+======USER DATA======
+UserID: 0012
+Score: 2
+Dateplayed: 12/12/2021 10:25:04 PM
+Duration: 20036
+======USER DATA======
+UserID: 0013
+Score: 2
+Dateplayed: 12/12/2021 11:45:28 PM
+Duration: 15788

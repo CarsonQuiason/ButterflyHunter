@@ -1436,7 +1436,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1045026018}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1657679985}
+        m_TargetAssemblyTypeName: mainMenuScript, Assembly-CSharp
+        m_MethodName: submitFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1045026018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2434,6 +2446,7 @@ MonoBehaviour:
   menu: {fileID: 799788386}
   feedBack: {fileID: 424823036}
   instructions: {fileID: 1024438304}
+  userInputFeedback: {fileID: 1198295730}
 --- !u!1 &1883815729
 GameObject:
   m_ObjectHideFlags: 0

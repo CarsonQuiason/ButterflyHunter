@@ -85,19 +85,22 @@ public class playerScript : MonoBehaviour
             case "bird":
                 StartCoroutine(giveNegFeedback());
                 Debug.Log("bird");
-                gameLoop.misses--;
                 Destroy(other.gameObject);
                 break;
             case "butterfly":
                 StartCoroutine(givePosFeedback());
                 Debug.Log("butterfly");
-                gameLoop.hits++;
+                gameLoop.hits += 1 * gameLoop.level;
                 Destroy(other.gameObject);
                 break;
             case "balloon":
                 StartCoroutine(giveNegFeedback());
                 Debug.Log("balloon");
-                gameLoop.misses--;
+                Destroy(other.gameObject);
+                break;
+            case "airplane":
+                StartCoroutine(giveNegFeedback());
+                Debug.Log("airplane");
                 Destroy(other.gameObject);
                 break;
         }
@@ -108,6 +111,7 @@ public class playerScript : MonoBehaviour
         imageFeedback.enabled = false;
         if(canMove)
         {
+            gameLoop.misses--;
             canMove = false;
             hitStun.enabled = true;
         }
